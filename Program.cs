@@ -30,15 +30,14 @@ namespace NetCore
             //} while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
             POINT current_pos, prev_pos;
-            List<POINT> coords = new List<POINT>();
+            List<POINT> coords = new();
 
             prev_pos.X = 0;
             prev_pos.Y = 0;
 
-
             Console.WriteLine("Press any key to start/stop recording mouse movements.");
             Console.ReadKey();
-            
+
             do
             {
                 if (GetCursorPos(out current_pos))
@@ -53,11 +52,12 @@ namespace NetCore
                     prev_pos.Y = current_pos.Y;
                 }
             } while (!Console.KeyAvailable);
-            
+
             Console.ReadKey();
 
             Console.WriteLine("Press any key to play the recorded mouse positions.");
             Console.ReadKey();
+            
             foreach (POINT coord in coords)
             {
                 SetCursorPos(coord.X, coord.Y);
