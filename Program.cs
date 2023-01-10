@@ -54,16 +54,25 @@ namespace NetCore
             } while (!Console.KeyAvailable);
 
             Console.ReadKey();
-
-            Console.WriteLine("Press any key to play the recorded mouse positions.");
+            Console.WriteLine("Press any key to play the recorded mouse positions. Press ESC to stop");
             Console.ReadKey();
             
-            foreach (POINT coord in coords)
+            ConsoleKey key = new();
+            
+            do
             {
-                SetCursorPos(coord.X, coord.Y);
-                System.Threading.Thread.Sleep(50);
-                if (Console.KeyAvailable) break;
-            }
+                foreach (POINT coord in coords)
+                {
+                    SetCursorPos(coord.X, coord.Y);
+                    System.Threading.Thread.Sleep(50);
+                    if (Console.KeyAvailable) break;
+                }
+
+                if (Console.KeyAvailable)
+                {
+                    key = Console.ReadKey(true).Key;
+                }
+            } while (key != ConsoleKey.Escape);
         }
 
         [DllImport("user32.dll")]
