@@ -38,14 +38,13 @@ namespace NetCore
 
             Console.WriteLine("Press any key to start/stop recording mouse movements.");
             Console.ReadKey();
+            
             do
             {
                 if (GetCursorPos(out current_pos))
                 {
-
                     if ((current_pos.X != prev_pos.X) || (current_pos.Y != prev_pos.Y))
                     {
-
                         Console.WriteLine("({0},{1})", current_pos.X, current_pos.Y);
                         coords.Add(current_pos);
                     }
@@ -53,8 +52,8 @@ namespace NetCore
                     prev_pos.X = current_pos.X;
                     prev_pos.Y = current_pos.Y;
                 }
-
             } while (!Console.KeyAvailable);
+            
             Console.ReadKey();
 
             Console.WriteLine("Press any key to play the recorded mouse positions.");
