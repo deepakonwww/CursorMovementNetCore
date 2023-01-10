@@ -58,12 +58,11 @@ namespace NetCore
             Console.ReadKey();
             
             ConsoleKey key = new();
-            
             do
             {
                 foreach (POINT coord in coords)
                 {
-                    SetCursorPos(coord.X, coord.Y);
+                    SetCursorPos(coord.X, coord.Y); // Simulate Mouse Movement
                     System.Threading.Thread.Sleep(50);
                     if (Console.KeyAvailable) break;
                 }
@@ -72,6 +71,11 @@ namespace NetCore
                 {
                     key = Console.ReadKey(true).Key;
                 }
+
+                Process[] processes = Process.GetProcessesByName("notepad");
+
+                foreach (Process proc in processes)
+                    PostMessage(proc.MainWindowHandle, WM_KEYDOWN, VK_F5, 0); // Simulate Keystroke
             } while (key != ConsoleKey.Escape);
         }
 
@@ -80,5 +84,11 @@ namespace NetCore
 
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int X, int Y);
+
+        const UInt32 WM_KEYDOWN = 0x0100;
+        const int VK_F5 = 0x74;
+
+        [DllImport("user32.dll")]
+        static extern bool PostMessage(IntPtr hWnd, UInt32 Msg, int wParam, int lParam);
     }
 }
